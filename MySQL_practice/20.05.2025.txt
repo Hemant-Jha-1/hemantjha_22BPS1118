@@ -1,0 +1,35 @@
+create database tuesday;
+use tuesday;
+drop table products;
+create table category(
+c_id int primary key,
+c_name varchar(25),
+c_details varchar(25)
+);
+
+insert into category values(101,'electronics','abcd');
+insert into category values(102,'furniture','asdfdsddfgw');
+select * from category;
+create table products(
+p_id int primary key,
+p_name varchar(25),
+p_details varchar(25),
+c_id int,
+foreign key products(c_id) references category(c_id) on delete cascade
+);
+desc products;
+delete from category where c_id = 101;
+insert into products values(501,'sam s23','12gb ram',102);
+select * from products;
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int
+);
+
+ALTER TABLE Persons
+ADD CONSTRAINT PK_Person PRIMARY KEY (ID, LastName);
+
+ALTER TABLE Persons
+DROP PRIMARY KEY;

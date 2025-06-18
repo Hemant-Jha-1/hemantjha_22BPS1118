@@ -1,0 +1,79 @@
+
+	package connection;
+	import java.sql.*;
+	public class dbconnection {
+		public static void main(String[] args){
+			
+			try{
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				Connection con = DriverManager.getConnection(
+						"jdbc:mysql://localhost:3306/dbvit","root","hemant1234");
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery("select * from student");
+				while(rs.next())
+				System.out.println(rs.getInt(1)+" "+rs.getString(2)+" "+rs.getString(3));
+				con.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+				System.out.println("Sorry");
+			}
+		}
+			
+	}
+
+
+	package connection;
+	import java.sql.*;
+	public class dbconnection {
+		public static void main(String[] args){
+			dbconnection obj_dbconnection = new dbconnection();
+			System.out.println(obj_dbconnection.get_connection());
+		}
+			public Connection get_connection(){
+				Connection connection = null;
+				try{
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					connection = DriverManager.getConnection(
+							"jdbc:mysql://localhost:3306/dbvit","root","hemant1234");
+				}
+				catch(Exception e){
+					e.printStackTrace();
+					System.out.println("Sorry");
+				}
+				return connection;
+			}
+			
+	}
+	
+
+package connection;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+public class crud_operation {
+	public static void main(String[] args) {
+		crud_operation objTest=new crud_operation();
+	objTest.create_data("103", "manoj", 55);
+	objTest.create_data("104", "karthick", 65);
+}
+
+public void create_data(String sl_no,String name,int mark){
+	dbconnection obj_dbconnection=new dbconnection();
+	Connection connection=obj_dbconnection.get_connection();
+	PreparedStatement ps=null;
+	try {
+		String query="insert into student values (?,?,?)";
+		ps=connection.prepareStatement(query);
+		ps.setString(1, sl_no);
+		ps.setString(2, name);
+		ps.setInt(3, mark);
+		System.out.println(ps);
+		ps.executeUpdate();
+	} catch (Exception e) {
+		System.out.println(e);
+	}
+}
+
+}
